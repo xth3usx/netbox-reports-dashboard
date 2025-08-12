@@ -32,10 +32,4 @@ O projeto utiliza **HTML**, **CSS (Bootstrap)** e **JavaScript** puro, sem depen
 
 - [Bootstrap 5.3](https://getbootstrap.com/)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
-- JavaScript (vanilla)
-
-## Uso
-
-1. Abra `index.html` no navegador.
-2. Utilize as credenciais definidas no código para login (`netbox` / `123456` ou `q1w@e3r4t5y6`).
-3. Acesse o painel e clique nos relatórios desejados.
+- JavaScript
