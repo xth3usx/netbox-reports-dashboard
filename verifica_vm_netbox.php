@@ -4,8 +4,8 @@ date_default_timezone_set("America/Sao_Paulo");
 $report_date = date("d/m/Y H:i");
 
 // Configurações do NetBox
-$netbox_url   = "http://10.255.8.19/netbox/api";
-$netbox_token = "931547c237320de0b63e07a5d8c4ca9dc6d95e65";
+$netbox_url = "http://IP_NETBOX/netbox/api";
+$netbox_token = "TOKEN_AQUI";
 $headers = [
     "Authorization: Token $netbox_token",
     "Content-Type: application/json",
