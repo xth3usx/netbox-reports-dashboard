@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NetBox Reports</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #212529;
+    }
+    .navbar {
+      background-color: #263238 !important;
+    }
+    .navbar-brand {
+      font-weight: 600;
+    }
+    h1, h5 {
+      color: #37474f;
+    }
+    .card {
+      border: 1px solid #dfe3e8;
+      border-radius: 0.5rem;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    main {
+      padding-top: 3rem;
+      padding-bottom: 1rem;
+    }
+    .card-highlight {
+      background: linear-gradient(135deg, #1976d2, #42a5f5);
+      color: #fff;
+      border: 2px solid #1565c0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .card-highlight h5 {
+      color: #fff;
+    }
+    .card-highlight .btn {
+      border-color: #fff;
+      color: #fff;
+    }
+    .card-highlight .btn:hover {
+      background-color: rgba(255,255,255,0.15);
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar navbar-dark">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand" href="#">NetBox Reports</a>
+    <div class="d-flex gap-2">
+      <a href="http://10.255.8.19/netbox-reports/ip_manager.php" class="btn btn-success btn-sm">Gerenciar Rede de IPs</a>
+      <a href="http://10.255.8.19/netbox-reports/maquinas_virtuais.php" class="btn btn-success btn-sm">Visualizar VMs</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+
+    <!-- Máquinas detectadas na rede -->
+    <div class="col">
+      <div class="card h-100 p-3">
+        <div>
+          <h5 class="card-title">Máquinas detectadas na rede</h5>
+          <p class="card-text">Lista de máquinas virtuais e físicas possivelmente ativas que ainda não estão cadastradas no NetBox.</p>
+          <div class="d-flex gap-2">
+            <a href="http://10.255.8.19/netbox-reports/verifica_vm_netbox.php" class="btn btn-sm btn-outline-primary">Abrir relatório</a>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">Info</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hostname divergente -->
+    <div class="col">
+      <div class="card h-100 p-3">
+        <div>
+          <h5 class="card-title">Hostname divergente</h5>
+          <p class="card-text">Mostra possíveis VMs cujo hostname real difere do nome cadastrado.</p>
+          <a href="http://10.255.8.19/netbox-reports/verifica_hostname_ip.php" class="btn btn-sm btn-outline-primary">Abrir relatório</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- VMs com nomes duplicados -->
+    <div class="col">
+      <div class="card h-100 p-3">
+        <div>
+          <h5 class="card-title">VMs com nomes duplicados</h5>
+          <p class="card-text">Relatório de máquinas virtuais com nomes repetidos.</p>
+          <a href="http://10.255.8.19/netbox-reports/verifica_duplicados.php" class="btn btn-sm btn-outline-primary">Abrir relatório</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Site vazio -->
+    <div class="col">
+      <div class="card h-100 p-3">
+        <div>
+          <h5 class="card-title">Campo <code>Site</code> vazio</h5>
+          <p class="card-text">Mostra VMs que não foram vinculadas a um Site.</p>
+          <a href="http://10.255.8.19/netbox-reports/verifica_site.php" class="btn btn-sm btn-outline-primary">Abrir relatório</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- IP address vazio -->
+    <div class="col">
+      <div class="card h-100 p-3">
+        <div>
+          <h5 class="card-title">Campo <code>IP address</code> vazio</h5>
+          <p class="card-text">Exibe VMs que estão sem endereço IP definido.</p>
+          <a href="http://10.255.8.19/netbox-reports/verifica_ip.php" class="btn btn-sm btn-outline-primary">Abrir relatório</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role vazio -->
+    <div class="col">
+      <div class="card h-100 p-3">
+        <div>
+          <h5 class="card-title">Campo <code>Role</code> vazio</h5>
+          <p class="card-text">Aponta VMs sem função atribuída.</p>
+          <a href="http://10.255.8.19/netbox-reports/verifica_role.php" class="btn btn-sm btn-outline-primary">Abrir relatório</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAIXA DESTACADA EXISTENTE: Consistência DNS -->
+    <div class="col">
+      <div class="card card-highlight h-100 p-3">
+        <div>
+          <h5 class="card-title">IPAM - Consistência de IPs Públicos x DNS</h5>
+          <p class="card-text"></p>
+          <div class="d-flex align-items-center gap-2">
+            <a href="https://app.sti.uff.br/netbox-reports/dns_check.php" class="btn btn-sm btn-outline-light" target="_blank">Iniciar Verificação</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- NOVA CAIXA DESTACADA: IPs duplicados no IPAM -->
+    <div class="col">
+      <div class="card card-highlight h-100 p-3">
+        <div>
+          <h5 class="card-title">IPAM - IPs duplicados</h5>
+          <p class="card-text"></p>
+          <div class="d-flex align-items-center gap-2">
+            <a href="https://app.sti.uff.br/netbox-reports/ipam_duplicate.php" class="btn btn-sm btn-outline-light" target="_blank">Iniciar Verificação</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOVA CAIXA DESTACADA: Comparação de IPs do NetBox x DNS
+    <div class="col">
+      <div class="card card-highlight h-100 p-3">
+        <div>
+          <h5 class="card-title">IPAM - Comparação de IPs do NetBox x DNS</h5>
+          <p class="card-text"></p>
+          <div class="d-flex align-items-center gap-2">
+            <a href="https://app.sti.uff.br/netbox-reports/ip_netbox_vs_dns.php" class="btn btn-sm btn-outline-light" target="_blank">Iniciar Verificação</a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- NOVA CAIXA DESTACADA: IPs da rede 200.20.0.0/24 encontrados no DNS
+    <div class="col">
+      <div class="card card-highlight h-100 p-3">
+        <div>
+          <h5 class="card-title">DNS - IPs da rede 200.20.0.0/24 encontrados</h5>
+          <p class="card-text"></p>
+          <div class="d-flex align-items-center gap-2">
+            <a href="https://app.sti.uff.br/netbox-reports/ip_dns.php" class="btn btn-sm btn-outline-light" target="_blank">Iniciar Verificação</a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+  </div>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="infoModalLabel">Nota</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <p>O teste utiliza apenas a função PHP <code>gethostbyaddr($ip)</code>, que realiza uma resolução reversa de DNS.</p>
+        <p>Esse método não garante que a máquina está ativa. Como ICMP está desativado, não é possível pingar as máquinas.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center py-4">
+  <div class="container">
+    <small class="text-muted">Desenvolvido para Netbox - v1.1</small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
